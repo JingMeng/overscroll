@@ -60,7 +60,9 @@ public abstract class OverScrollHelper {
 
     protected void mSmoothScrollBy(int dx, int dy) {
         mScroller.startScroll(0, mScroller.getFinalY(), 0, dy);
-        getView().invalidate();
+          if (isOverScrolled) {
+            getView().invalidate();
+        }
     }
 
     protected abstract View getView();
@@ -82,10 +84,8 @@ public abstract class OverScrollHelper {
                     checkMoveY = 0;
                     dealy += (int) (oldY - ev.getY());
                     oldY = ev.getY();
-//                    if (!isOverScrolled) {
-                        isOverScrolled = checkOverScrollMode(dealy);
-//                    }
-                    if (overScrollEnable && isOverScrolled) {
+                    isOverScrolled = checkOverScrollMode(dealy);
+                    if (overScrollEnable) {
                         overScrolled(dealy);
                     }
 
